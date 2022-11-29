@@ -45,10 +45,10 @@ class Parser:
     while self.current_token != None and self.current_token.type in (TokenType.MULTIPLY, TokenType.DIVIDE):
       if self.current_token.type == TokenType.MULTIPLY:
         self.advance()
-        result = MultiplyNode(result, self.term())
+        result = MultiplyNode(result, self.factor())
       elif self.current_token.type == TokenType.DIVIDE:
         self.advance()
-        result = DivideNode(result, self.term())
+        result = DivideNode(result, self.factor())
 
     return result
   
