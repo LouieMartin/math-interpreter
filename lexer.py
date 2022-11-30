@@ -1,3 +1,4 @@
+from errors import IllegalCharacterError
 from tokens import TokenType, Token
 
 WHITESPACE = ' \t\r\n\f'
@@ -5,6 +6,7 @@ DIGITS = '.0123456789'
 
 class Lexer:
   def __init__(self, text):
+    self._text = text
     self.text = iter(text)
     self.advance()
   
@@ -18,32 +20,35 @@ class Lexer:
     while self.current_character != None:
       if self.current_character in WHITESPACE:
         self.advance()
-      if self.current_character in DIGITS:
+      elif self.current_character in DIGITS:
         yield self.generate_number()
       elif self.current_character == '+':
-        self.advance()
         yield Token(TokenType.PLUS)
+        self.advance()
       elif self.current_character == '-':
-        self.advance()
         yield Token(TokenType.MINUS)
+        self.advance()
       elif self.current_character == '*':
-        self.advance()
         yield Token(TokenType.MULTIPLY)
+        self.advance()
       elif self.current_character == '/':
-        self.advance()
         yield Token(TokenType.DIVIDE)
+        self.advance()
+      elif self.current_character == '^':
+        yield Token(TokenType.POWER)
+        self.advance()
       elif self.current_character == '(':
-        self.advance()
         yield Token(TokenType.LPAREN)
-      elif self.current_character == ')':
         self.advance()
+      elif self.current_character == ')':
         yield Token(TokenType.RPAREN)
+        self.advance()
       else:
-        raise Exception(f'Illegal Character "{self.current_character}"')
+        raise IllegalCharacterError(self.current_character)
   
   def generate_number(self):
-    decimal_point_count = 0
-    number_string: str = self.current_character
+    decimal_point_count = 1 if self.current_character == '.' else 0
+    number_string = self.current_character
 
     self.advance()
 
@@ -61,4 +66,7 @@ class Lexer:
     if number_string.endswith('.'):
       number_string += '0'
 
-    return Token(TokenType.NUMBER, float(number_string))
+    if decimal_point_count == 0:
+      return Token(TokenType.INTEGER, int(number_string))
+    else:
+      return Token(TokenType.FLOAT, float(number_string))

@@ -2,13 +2,15 @@ from dataclasses import dataclass
 from enum import Enum
 
 class TokenType(Enum):
-  NUMBER     = 0
-  PLUS       = 1
-  MINUS      = 2
-  MULTIPLY   = 3
-  DIVIDE     = 4
-  LPAREN     = 6
-  RPAREN     = 7
+  INTEGER    = 0
+  FLOAT      = 1
+  PLUS       = 2
+  MINUS      = 3
+  MULTIPLY   = 4
+  DIVIDE     = 5
+  POWER      = 6
+  LPAREN     = 7
+  RPAREN     = 8
 
 @dataclass
 class Token:

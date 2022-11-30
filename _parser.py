@@ -65,7 +65,7 @@ class Parser:
 
       self.advance()
       return result
-    elif token.type == TokenType.NUMBER:
+    elif token.type in (TokenType.INTEGER, TokenType.FLOAT):
       self.advance()
       return NumberNode(token.value)
     elif token.type == TokenType.PLUS:

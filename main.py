@@ -14,6 +14,8 @@ while True:
     interpreter = Interpreter()
     value = interpreter.visit(tree)
     print(value)
-    print(tree)
+  except KeyboardInterrupt:
+    print('\nQuit')
+    quit()
   except Exception as error:
     print(error)

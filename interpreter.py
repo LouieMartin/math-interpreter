@@ -1,3 +1,4 @@
+from errors import MathError
 from values import Number
 from nodes import *
 
@@ -22,8 +23,8 @@ class Interpreter:
   def visit_DivideNode(self, node):
     try:
       return Number(self.visit(node.left_node).value / self.visit(node.right_node).value)
-    except:
-      raise Exception('Runtime math error')
+    except Exception:
+      raise MathError('Cannot divide with 0.')
 
   def visit_PositiveNode(self, node):
     return Number(+self.visit(node.node).value)
