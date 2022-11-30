@@ -54,7 +54,6 @@ class Parser:
   
   def factor(self):
     token = self.current_token
-    result = self.power()
 
     if token.type == TokenType.PLUS:
       self.advance()
@@ -63,7 +62,7 @@ class Parser:
       self.advance()
       return NegativeNode(self.factor())
     
-    return result
+    return self.power()
   
   def power(self):
     result = self.atom()
