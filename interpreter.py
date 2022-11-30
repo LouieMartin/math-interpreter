@@ -25,6 +25,9 @@ class Interpreter:
       return Number(self.visit(node.left_node).value / self.visit(node.right_node).value)
     except Exception:
       raise MathError('Cannot divide with 0.')
+  
+  def visit_PowerNode(self, node):
+    return Number(self.visit(node.left_node).value ** self.visit(node.right_node).value)
 
   def visit_PositiveNode(self, node):
     return Number(+self.visit(node.node).value)

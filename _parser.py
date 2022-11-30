@@ -54,6 +54,28 @@ class Parser:
   
   def factor(self):
     token = self.current_token
+    result = self.power()
+
+    if token.type == TokenType.PLUS:
+      self.advance()
+      return PositiveNode(self.factor())
+    elif token.type == TokenType.MINUS:
+      self.advance()
+      return NegativeNode(self.factor())
+    
+    return result
+  
+  def power(self):
+    result = self.atom()
+
+    while self.current_token != None and self.current_token.type == TokenType.POWER:
+      self.advance()
+      result = PowerNode(result, self.factor())
+
+    return result
+
+  def atom(self):
+    token = self.current_token
 
     if token.type == TokenType.LPAREN:
       self.advance()
@@ -68,11 +90,5 @@ class Parser:
     elif token.type in (TokenType.INTEGER, TokenType.FLOAT):
       self.advance()
       return NumberNode(token.value)
-    elif token.type == TokenType.PLUS:
-      self.advance()
-      return PositiveNode(self.factor())
-    elif token.type == TokenType.MINUS:
-      self.advance()
-      return NegativeNode(self.factor())
     
     self.raise_error()
