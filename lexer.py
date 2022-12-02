@@ -53,6 +53,8 @@ class Lexer:
       elif self.current_character == ')':
         yield Token(TokenType.RPAREN)
         self.advance()
+      else:
+        raise IllegalCharacterError(self.current_character)
   
   def generate_number(self):
     decimal_point_count = 1 if self.current_character == '.' else 0
