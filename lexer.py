@@ -4,16 +4,6 @@ from tokens import TokenType, Token
 WHITESPACE = ' \t\r\n\f'
 DIGITS = '.0123456789'
 
-characters = {
-  '+': TokenType.PLUS,
-  '-': TokenType.MINUS,
-  '*': TokenType.MULTIPLY,
-  '/': TokenType.DIVIDE,
-  '^': TokenType.POWER,
-  '(': TokenType.LPAREN,
-  ')': TokenType.RPAREN
-}
-
 class Lexer:
   def __init__(self, text):
     self._text = text
