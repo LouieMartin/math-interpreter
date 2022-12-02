@@ -43,7 +43,7 @@ class DivideNode:
 class PowerNode:
   left_node: any
   right_node: any
-  
+
   def __repr__(self):
     return f'({self.left_node}^{self.right_node})'
 
