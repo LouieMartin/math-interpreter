@@ -32,11 +32,26 @@ class Lexer:
         self.advance()
       elif self.current_character in DIGITS:
         yield self.generate_number()
-      else:
-        if self.current_character not in characters:
-          raise IllegalCharacterError(self.current_character)
-
-        yield Token(characters[self.current_character])
+      elif self.current_character == '+':
+        yield Token(TokenType.PLUS)
+        self.advance()
+      elif self.current_character == '-':
+        yield Token(TokenType.MINUS)
+        self.advance()
+      elif self.current_character == '*':
+        yield Token(TokenType.MULTIPLY)
+        self.advance()
+      elif self.current_character == '/':
+        yield Token(TokenType.DIVIDE)
+        self.advance()
+      elif self.current_character == '^':
+        yield Token(TokenType.POWER)
+        self.advance()
+      elif self.current_character == '(':
+        yield Token(TokenType.LPAREN)
+        self.advance()
+      elif self.current_character == ')':
+        yield Token(TokenType.RPAREN)
         self.advance()
   
   def generate_number(self):
