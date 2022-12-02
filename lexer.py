@@ -4,6 +4,16 @@ from tokens import TokenType, Token
 WHITESPACE = ' \t\r\n\f'
 DIGITS = '.0123456789'
 
+characters = {
+  '+': TokenType.PLUS,
+  '-': TokenType.MINUS,
+  '*': TokenType.MULTIPLY,
+  '/': TokenType.DIVIDE,
+  '^': TokenType.POWER,
+  '(': TokenType.LPAREN,
+  ')': TokenType.RPAREN
+}
+
 class Lexer:
   def __init__(self, text):
     self._text = text
@@ -22,29 +32,12 @@ class Lexer:
         self.advance()
       elif self.current_character in DIGITS:
         yield self.generate_number()
-      elif self.current_character == '+':
-        yield Token(TokenType.PLUS)
-        self.advance()
-      elif self.current_character == '-':
-        yield Token(TokenType.MINUS)
-        self.advance()
-      elif self.current_character == '*':
-        yield Token(TokenType.MULTIPLY)
-        self.advance()
-      elif self.current_character == '/':
-        yield Token(TokenType.DIVIDE)
-        self.advance()
-      elif self.current_character == '^':
-        yield Token(TokenType.POWER)
-        self.advance()
-      elif self.current_character == '(':
-        yield Token(TokenType.LPAREN)
-        self.advance()
-      elif self.current_character == ')':
-        yield Token(TokenType.RPAREN)
-        self.advance()
       else:
-        raise IllegalCharacterError(self.current_character)
+        if self.current_character not in characters:
+          raise IllegalCharacterError(self.current_character)
+        
+        yield Token(characters[self.current_character])
+        self.advance()
   
   def generate_number(self):
     decimal_point_count = 1 if self.current_character == '.' else 0
