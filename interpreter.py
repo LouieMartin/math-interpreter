@@ -23,7 +23,7 @@ class Interpreter:
   def visit_DivideNode(self, node):
     try:
       return Number(self.visit(node.left_node).value / self.visit(node.right_node).value)
-    except Exception:
+    except ZeroDivisionError:
       raise MathError('Cannot divide with 0.')
   
   def visit_PowerNode(self, node):
