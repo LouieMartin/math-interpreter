@@ -17,5 +17,5 @@ while True:
   except KeyboardInterrupt:
     print('\nQuit')
     quit()
-  # except Exception as error:
-  #   print(error)
+  except Exception as error:
+    print(error)
