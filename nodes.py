@@ -8,6 +8,21 @@ class NumberNode:
     return f'{self.value}'
 
 @dataclass
+class VariableAccessNode:
+  variable_name: any
+
+  def __repr__(self):
+    return f'{self.variable_name}'
+
+@dataclass
+class VariableAssignNode:
+  variable_name: any
+  value: any
+
+  def __repr__(self):
+    return f'var {self.variable_name} = {self.value}'
+
+@dataclass
 class AddNode:
   left_node: any
   right_node: any

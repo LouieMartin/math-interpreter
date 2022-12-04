@@ -77,5 +77,6 @@ class Lexer:
       self.advance()
 
     token_type = TokenType.KEYWORD if identifier_string in KEYWORDS else TokenType.IDENTIFIER
+    token = Token(token_type, identifier_string)
 
-    return Token(token_type, identifier_string)
+    return token
