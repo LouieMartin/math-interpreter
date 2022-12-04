@@ -1,7 +1,9 @@
+from tokens import TokenType, KEYWORDS, Token
 from errors import IllegalCharacterError
-from tokens import TokenType, Token
+from string import ascii_letters
 
 WHITESPACE = ' \t\r\n\f'
+LETTERS = ascii_letters
 DIGITS = '.0123456789'
 
 characters = {
@@ -10,6 +12,7 @@ characters = {
   '*': TokenType.MULTIPLY,
   '/': TokenType.DIVIDE,
   '^': TokenType.POWER,
+  '=': TokenType.EQUALS,
   '(': TokenType.LPAREN,
   ')': TokenType.RPAREN
 }
@@ -30,6 +33,8 @@ class Lexer:
     while self.current_character != None:
       if self.current_character in WHITESPACE:
         self.advance()
+      elif self.current_character in LETTERS:
+        yield self.generate_identifier()
       elif self.current_character in DIGITS:
         yield self.generate_number()
       else:
@@ -63,3 +68,14 @@ class Lexer:
       return Token(TokenType.INTEGER, int(number_string))
     else:
       return Token(TokenType.FLOAT, float(number_string))
+  
+  def generate_identifier(self):
+    identifier_string = ''
+
+    while self.current_character != None and self.current_character in LETTERS + DIGITS + '_':
+      identifier_string += self.current_character
+      self.advance()
+
+    token_type = TokenType.KEYWORD if identifier_string in KEYWORDS else TokenType.IDENTIFIER
+
+    return Token(token_type, identifier_string)

@@ -29,6 +29,23 @@ class Parser:
   def expression(self):
     result = self.term()
 
+    if self.current_token.matches(TokenType.KEYWORD, 'var'):
+      self.advance()
+
+      if self.current_token.type != TokenType.IDENTIFIER:
+        self.raise_error()
+
+      variable_name = self.current_token
+
+      self.advance()
+
+      if self.current_token.type != TokenType.EQUALS:
+        self.raise_error()
+
+      self.advance()
+
+      # Something...
+
     while self.current_token != None and self.current_token.type in (TokenType.PLUS, TokenType.MINUS):
       if self.current_token.type == TokenType.PLUS:
         self.advance()
@@ -89,5 +106,9 @@ class Parser:
     elif token.type in (TokenType.INTEGER, TokenType.FLOAT):
       self.advance()
       return NumberNode(token.value)
+    elif token.type == TokenType.IDENTIFIER:
+      self.advance()
+      
+      # Something...
     
     self.raise_error()
