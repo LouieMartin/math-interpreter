@@ -7,9 +7,7 @@ DIGITS = '.0123456789'
 characters = {
   '+': TokenType.PLUS,
   '-': TokenType.MINUS,
-  '*': TokenType.MULTIPLY,
   '/': TokenType.DIVIDE,
-  '^': TokenType.POWER,
   '(': TokenType.LPAREN,
   ')': TokenType.RPAREN
 }
@@ -32,6 +30,14 @@ class Lexer:
         self.advance()
       elif self.current_character in DIGITS:
         yield self.generate_number()
+      elif self.current_character == '*':
+        self.advance()
+
+        token = Token(TokenType.POWER) if self.current_character == '*' else Token(TokenType.MULTIPLY)
+
+        self.advance()
+
+        yield token
       else:
         if self.current_character not in characters:
           raise IllegalCharacterError(self.current_character)
