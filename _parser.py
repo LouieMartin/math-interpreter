@@ -4,7 +4,6 @@ from nodes import *
 class Parser:
   def __init__(self, tokens):
     self.tokens = iter(tokens)
-    self._tokens = tokens
     self.advance()
   
   def raise_error(self):
@@ -45,9 +44,7 @@ class Parser:
 
       self.advance()
 
-      expression = self.expression()
-
-      return VariableAssignNode(variable_name, expression)
+      # Something...
 
     while self.current_token != None and self.current_token.type in (TokenType.PLUS, TokenType.MINUS):
       if self.current_token.type == TokenType.PLUS:
@@ -111,6 +108,7 @@ class Parser:
       return NumberNode(token.value)
     elif token.type == TokenType.IDENTIFIER:
       self.advance()
-      return VariableAccessNode(token)
+      
+      # Something...
     
     self.raise_error()
